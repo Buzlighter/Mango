@@ -9,10 +9,13 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.hbb20.CountryCodePicker
 import com.test.mango.App
+import com.test.mango.R
 import com.test.mango.auth.ui.di.DaggerAuthComponent
 import com.test.mango.auth.ui.model.AuthBody
 import com.test.mango.auth.ui.model.AuthResponse
@@ -66,17 +69,15 @@ class AuthActivity : AppCompatActivity() {
     private val observeAuthResponse: (Status<AuthResponse>) -> Unit = { response ->
         when(response) {
             is Status.Success -> {
+                Toast.makeText(this, R.string.enter_hail, Toast.LENGTH_SHORT).show()
                 binding.smsInput.visibility = View.VISIBLE
             }
             is Status.Error -> {
+                Toast.makeText(this, R.string.enter_error, Toast.LENGTH_SHORT).show()
                 binding.smsInput.visibility = View.GONE
             }
-            is Status.Loading -> {
-                binding.smsInput.visibility = View.GONE
-            }
-            else ->  {
-                binding.smsInput.visibility = View.GONE
-            }
+            is Status.Loading -> { binding.smsInput.visibility = View.GONE }
+            else ->  { binding.smsInput.visibility = View.GONE }
         }
     }
 
@@ -102,7 +103,7 @@ class AuthActivity : AppCompatActivity() {
     private fun checkUser(data: AuthTokenResponse) {
         if (data.isUserExist) {
             val profileIntent = Intent(this@AuthActivity, ProfileActivity::class.java)
-            this@AuthActivity.startActivity(profileIntent)
+            this@AuthActivity.startActivity(profileIntent, bundleOf())
         } else {
             val registerIntent = Intent(this@AuthActivity, RegistrationActivity::class.java)
             this@AuthActivity.startActivity(registerIntent)
@@ -118,7 +119,6 @@ class AuthActivity : AppCompatActivity() {
     private val onCountryChangeListener = CountryCodePicker.OnCountryChangeListener {
         selectedCountryCode = binding.countryPicker.selectedCountryCode
     }
-
 
     private val afterTextChangedListener = object : TextWatcher {
         override fun beforeTextChanged(numInput: CharSequence, start: Int, count: Int, after: Int) {}

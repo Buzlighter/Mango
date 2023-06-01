@@ -5,6 +5,7 @@ import com.test.mango.auth.ui.model.AuthBody
 import com.test.mango.auth.ui.model.AuthCheckBody
 import com.test.mango.auth.ui.model.AuthResponse
 import com.test.mango.auth.ui.model.AuthTokenResponse
+import com.test.mango.profile.model.User
 import com.test.mango.registration.model.RegistrationBody
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.cancellable
@@ -24,5 +25,9 @@ class MangoRepositoryImpl @Inject constructor(private val mangoService: MangoSer
 
     override fun authCheck(authCheckBody: AuthCheckBody): Flow<Response<AuthTokenResponse>> = flow {
         emit(mangoService.checkAuthUser(authCheckBody))
+    }
+
+    override fun getUser(accessToken: String): Flow<Response<User>> = flow {
+        emit(mangoService.getUser("Bearer $accessToken"))
     }
 }
