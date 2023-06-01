@@ -2,22 +2,21 @@ package com.test.mango.registration
 
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import com.test.mango.App
 import com.test.mango.R
 import com.test.mango.auth.ui.AuthActivity
 import com.test.mango.data.ext.collectIt
-import com.test.mango.data.model.RegisterResponse
-import com.test.mango.data.model.RegistrationBody
 import com.test.mango.data.model.Status
 import com.test.mango.databinding.ActivityRegistrationBinding
 import com.test.mango.registration.di.DaggerRegistrationComponent
+import com.test.mango.registration.model.RegisterResponse
+import com.test.mango.registration.model.RegistrationBody
 import javax.inject.Inject
 
 const val ACCESS_TOKEN_KEY = "ATK"
@@ -44,7 +43,6 @@ class RegistrationActivity : AppCompatActivity() {
 
         encryptedSharedPreferences = registrationComponent.getEncryptedSharedPref()
 
-//        binding.numberInput.addTextChangedListener()
 
         binding.registerBtn.setOnClickListener {
             val registrationData = RegistrationBody(
@@ -55,18 +53,10 @@ class RegistrationActivity : AppCompatActivity() {
             registrationViewModel.registerUser(registrationData)
         }
 
-        registrationViewModel.stateFlow.collectIt(this, response)
+        registrationViewModel.stateFlow.collectIt(this, observeRegisterResponse)
     }
 
-    private val onEditorNumberListener = object: TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        override fun afterTextChanged(s: Editable?) {
-
-        }
-    }
-
-    private val response: (Status<RegisterResponse>) -> Unit = { response ->
+    private val observeRegisterResponse: (Status<RegisterResponse>) -> Unit = { response ->
         when (response) {
             is Status.Success -> {
                 storeData(response.data!!)
@@ -75,6 +65,7 @@ class RegistrationActivity : AppCompatActivity() {
             is Status.Error -> {
                 showError(response.errorMsg)
             }
+            is Status.Loading -> {}
             else -> {}
         }
     }

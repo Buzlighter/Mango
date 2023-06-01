@@ -1,4 +1,4 @@
-package com.test.mango.data.model
+package com.test.mango.registration.model
 
 data class RegistrationBody(val phone: String,
                             val name: String,

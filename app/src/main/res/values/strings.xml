@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Mango</string>
 
-    <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Войти</string>
+    <string name="action_confirm">Подтвердить</string>
     <string name="action_sign_in_short">Во</string>
     <string name="name_register">Регистрация</string>
     <string name="action_register">Зарегистрироваться</string>
@@ -13,6 +13,7 @@
     <string name="number_mock">"+79219999999"</string>
 
     <string name="prompt_number">Номер телефона</string>
+    <string name="prompt_sms">Смс код</string>
     <string name="prompt_name">Имя</string>
     <string name="prompt_username">Имя пользователя</string>
 

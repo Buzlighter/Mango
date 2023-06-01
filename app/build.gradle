@@ -69,4 +69,7 @@ dependencies {
 
     def security_storage_version = "1.0.0-rc02"
     implementation "androidx.security:security-crypto:$security_storage_version"
+
+    def country_code_picker_version = "2.7.2"
+    implementation "com.hbb20:ccp:$country_code_picker_version"
 }

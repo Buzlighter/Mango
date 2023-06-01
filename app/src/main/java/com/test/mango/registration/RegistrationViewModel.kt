@@ -3,8 +3,8 @@ package com.test.mango.registration
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.test.mango.data.cache.MangoRepository
-import com.test.mango.data.model.RegisterResponse
-import com.test.mango.data.model.RegistrationBody
+import com.test.mango.registration.model.RegisterResponse
+import com.test.mango.registration.model.RegistrationBody
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOn
